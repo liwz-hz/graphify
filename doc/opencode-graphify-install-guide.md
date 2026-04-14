@@ -35,6 +35,69 @@ pip3 show graphifyy
 
 ---
 
+### ⚠️ 常见问题：国内镜像源报错 "No matching distribution found"
+
+**问题描述**：
+使用国内镜像源（清华、阿里云、豆瓣等）安装 graphifyy 时，可能出现：
+```
+ERROR: No matching distribution found for graphifyy
+```
+
+**原因分析**：
+- graphifyy 是一个较新的包（2024年发布），国内镜像源可能未同步最新版本
+- 部分镜像源同步延迟可达数小时甚至数天
+- 清华源、中科大源对新包的同步速度较慢
+
+**解决方案**：
+
+#### 方案一：使用官方 PyPI 源（推荐）
+
+```bash
+pip3 install graphifyy -i https://pypi.org/simple --break-system-packages
+```
+
+#### 方案二：使用阿里云镜像（同步较快）
+
+```bash
+pip3 install graphifyy -i https://mirrors.aliyun.com/pypi/simple --break-system-packages
+```
+
+> 阿里云镜像对新包同步速度较快，通常能在发布后 1-2 小时内同步。
+
+#### 方案三：临时切换源后恢复
+
+```bash
+# 安装时指定官方源
+pip3 install graphifyy -i https://pypi.org/simple --break-system-packages
+
+# 安装完成后，恢复默认国内源（可选）
+pip3 config set global.index-url https://mirrors.aliyun.com/pypi/simple
+```
+
+#### 方案四：手动下载 whl 文件安装
+
+```bash
+# 从 PyPI 官网下载对应版本的 whl 文件
+# https://pypi.org/project/graphifyy/#files
+
+# 手动安装
+pip3 install graphifyy-0.4.12-py3-none-any.whl --break-system-packages
+```
+
+**国内镜像源对比**：
+
+| 镜像源 | 地址 | 同步速度 | 推荐度 |
+|--------|------|----------|--------|
+| 官方 PyPI | https://pypi.org/simple | 实时 | ⭐⭐⭐⭐⭐（安装新包必用）|
+| 阿里云 | https://mirrors.aliyun.com/pypi/simple | 较快（1-2h）| ⭐⭐⭐⭐ |
+| 清华大学 | https://pypi.tuna.tsinghua.edu.cn/simple | 较慢（数小时）| ⭐⭐⭐ |
+| 中科大 | https://pypi.mirrors.ustc.edu.cn/simple | 较慢 | ⭐⭐⭐ |
+| 豆瓣 | http://pypi.douban.com/simple | 很慢 | ⭐⭐ |
+
+> **建议**：安装新发布的包时，优先使用官方源或阿里云源。日常开发可配置国内源加速。
+
+---
+
 ### 步骤 2：全局 skill 安装
 
 ```bash
